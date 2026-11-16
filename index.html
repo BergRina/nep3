@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>НЭП · Тест по истории России — ЕГЭ</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23f7e3d7' stroke='%23c07a5b' stroke-width='3'/%3E%3Ctext x='32' y='40' font-size='22' text-anchor='middle' font-family='Georgia' fill='%238a4f33'%3EН%3C/text%3E%3C/svg%3E">
+<style>
+/* ============ ТОКЕНЫ ============ */
+:root{
+  --paper:#f6f1e6; --paper-2:#ece3d1; --surface:#fffcf5; --surface-2:#f8f2e5;
+  --ink:#3f382e; --ink-soft:#6b6152; --muted:#9a8d79;
+  --line:#e6dcc9; --line-strong:#d5c8ae;
+  --peach:#e8b9a4; --peach-deep:#c07a5b; --peach-soft:#f7e3d7; --peach-ink:#8a4f33;
+  --sage:#b9cfae; --sage-deep:#6f9463; --sage-soft:#e7efdd; --sage-ink:#4c6b41;
+  --blue:#a9c4d8; --blue-deep:#5b87a6; --blue-soft:#e2ecf3; --blue-ink:#3d6480;
+  --amber:#e9cf9a; --amber-deep:#b98f3e; --amber-soft:#f7ecd4; --amber-ink:#7d5f22;
+  --rose:#e0aca6; --rose-deep:#b0655d; --rose-soft:#f7e3e0; --rose-ink:#8f4a44;
+  --lav:#c6b8d6; --lav-deep:#8a76a8; --lav-soft:#ece5f3; --lav-ink:#5f4f7a;
+  --radius:18px; --radius-sm:12px;
+  --shadow:0 10px 30px rgba(93,74,52,.09),0 2px 8px rgba(93,74,52,.05);
+  --font-display:Georgia,'Times New Roman',serif;
+  --font-body:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;
+}
+/* ============ БАЗА / ФОН ============ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--line-strong) var(--paper)}
+body{
+  font-family:var(--font-body);font-size:16px;line-height:1.55;color:var(--ink);
+  background:
+    radial-gradient(900px 520px at 8% -6%,var(--peach-soft) 0%,transparent 62%),
+    radial-gradient(820px 560px at 104% 18%,var(--blue-soft) 0%,transparent 60%),
+    radial-gradient(760px 620px at 40% 112%,var(--sage-soft) 0%,transparent 58%),
+    var(--paper);
+  background-attachment:fixed;min-height:100vh;-webkit-font-smoothing:antialiased;
+}
+body::after{ /* лёгкое архивное зерно */
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.orb{position:fixed;border-radius:50%;filter:blur(70px);z-index:0;pointer-events:none;opacity:.55}
+.orb-a{width:340px;height:340px;left:-120px;top:8%;background:radial-gradient(circle,var(--peach) 0%,transparent 70%);animation:drift 28s ease-in-out infinite alternate}
+.orb-b{width:300px;height:300px;right:-100px;bottom:6%;background:radial-gradient(circle,var(--blue) 0%,transparent 70%);animation:drift 34s ease-in-out infinite alternate-reverse}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(34px,-40px)}}
+::-webkit-scrollbar{width:10px;height:8px}
+::-webkit-scrollbar-track{background:var(--paper)}
+::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:99px;border:2px solid var(--paper)}
+::-webkit-scrollbar-thumb:hover{background:var(--peach-deep)}
+::selection{background:var(--peach);color:var(--ink)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:3px solid var(--blue-deep);outline-offset:2px;border-radius:6px}
+#app{position:relative;z-index:1;max-width:840px;margin:0 auto;padding:16px 14px 64px}
+.icon{display:inline-flex;flex:none;align-items:center;justify-content:center}
+.icon svg{display:block}
+/* ============ КОМПОНЕНТЫ ============ */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 16px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;
+  padding:11px 20px;border-radius:14px;border:1px solid transparent;cursor:pointer;
+  font:600 15.5px/1.2 var(--font-body);color:var(--ink);background:transparent;text-decoration:none;
+  transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn:active{transform:scale(.985)}
+.btn.primary{
+  background:linear-gradient(135deg,#efc6ae 0%,#e0ab97 100%);border-color:#d6a184;color:#573823;
+  box-shadow:0 6px 16px rgba(192,122,91,.28);
+}
+.btn.primary:hover{transform:translateY(-1px);box-shadow:0 9px 22px rgba(192,122,91,.34);background:linear-gradient(135deg,#f2ccb6 0%,#e4b29e 100%)}
+.btn.secondary{background:var(--surface);border-color:var(--line-strong);color:var(--ink)}
+.btn.secondary:hover{background:var(--surface-2);transform:translateY(-1px)}
+.btn.ghost{color:var(--ink-soft)}
+.btn.ghost:hover{background:var(--surface-2);color:var(--ink)}
+.btn.danger{background:#a85850;color:#fff7f2;box-shadow:0 6px 16px rgba(168,88,80,.3)}
+.btn.danger:hover{background:#9c4f47;transform:translateY(-1px)}
+.btn.danger-ghost{color:var(--rose-ink)}
+.btn.danger-ghost:hover{background:var(--rose-soft)}
+.btn.small{min-height:44px;padding:9px 16px;font-size:14.5px}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+.icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;flex:none;
+  border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);cursor:pointer;
+  transition:background .15s,color .15s,border-color .15s;
+}
+.icon-btn:hover{background:var(--rose-soft);color:var(--rose-ink);border-color:var(--rose)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-soft)}
+.topic-peach{background:var(--peach-soft);color:var(--peach-ink);border-color:var(--peach)}
+.topic-blue{background:var(--blue-soft);color:var(--blue-ink);border-color:var(--blue)}
+.topic-amber{background:var(--amber-soft);color:var(--amber-ink);border-color:var(--amber)}
+.topic-lav{background:var(--lav-soft);color:var(--lav-ink);border-color:var(--lav)}
+.topic-sage{background:var(--sage-soft);color:var(--sage-ink);border-color:var(--sage)}
+.topic-rose{background:var(--rose-soft);color:var(--rose-ink);border-color:var(--rose)}
+.form-error{display:flex;align-items:flex-start;gap:8px;margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--rose-soft);border:1px solid var(--rose);color:var(--rose-ink);font-size:14px;font-weight:600}
+.form-error[hidden]{display:none}
+.banner{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--radius-sm);border:1px solid;font-size:14.5px}
+.banner .icon{margin-top:2px}
+.banner.warn{background:var(--amber-soft);border-color:var(--amber);color:var(--amber-ink)}
+.banner.info{background:var(--blue-soft);border-color:var(--blue);color:var(--blue-ink)}
+.shake{animation:shake .4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{0%{opacity:0;transform:scale(.7)}70%{transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+.stagger>*{animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both}
+.stagger>*:nth-child(2){animation-delay:.07s}.stagger>*:nth-child(3){animation-delay:.14s}
+.stagger>*:nth-child(4){animation-delay:.21s}.stagger>*:nth-child(5){animation-delay:.28s}
+.stagger>*:nth-child(6){animation-delay:.35s}
+/* ============ СТАРТ ============ */
+.start-wrap{display:flex;flex-direction:column;gap:16px}
+.brandline{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:2px 4px}
+.brand{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--peach-ink);letter-spacing:.02em}
+.brand .icon{color:var(--peach-deep)}
+.hero{position:relative;overflow:hidden;background:linear-gradient(150deg,var(--surface) 0%,var(--peach-soft) 130%)}
+.hero-grid{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.seal{width:132px;height:132px;flex:none;filter:drop-shadow(0 6px 14px rgba(192,122,91,.25))}
+.seal-rotor{transform-box:view-box;transform-origin:50% 50%;animation:sealSpin 90s linear infinite}
+@keyframes sealSpin{to{transform:rotate(360deg)}}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--peach-deep);margin-bottom:6px}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(27px,6vw,40px);line-height:1.14;letter-spacing:-.01em}
+h1 .years{color:var(--peach-deep);white-space:nowrap}
+.hero-sub{margin-top:10px;color:var(--ink-soft);font-size:15.5px;max-width:52ch}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.rules{display:flex;flex-direction:column;gap:7px;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line-strong);font-size:13.5px;color:var(--ink-soft)}
+.rules li{display:flex;gap:8px;align-items:flex-start;list-style:none}
+.rules .icon{color:var(--sage-deep);margin-top:2px}
+.timeline-card h2,.panel-title{font-family:var(--font-display);font-size:19px;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.panel-title .icon{color:var(--peach-deep)}
+.timeline{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 12px;scroll-snap-type:x proximity}
+.timeline::-webkit-scrollbar{height:8px}
+.timeline::-webkit-scrollbar-thumb{background:var(--peach);border:2px solid var(--surface)}
+.milestone{flex:none;scroll-snap-align:start;min-width:128px;max-width:160px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);position:relative}
+.milestone::before{content:'';position:absolute;left:12px;right:12px;top:0;height:3px;border-radius:0 0 4px 4px;background:var(--peach-deep);opacity:.65}
+.milestone b{display:block;font-family:var(--font-display);font-size:19px;color:var(--peach-ink)}
+.milestone span{font-size:12px;line-height:1.35;color:var(--ink-soft);display:block;margin-top:2px}
+.resume{background:var(--amber-soft);border-color:var(--amber)}
+.resume-head{display:flex;gap:10px;align-items:center;color:var(--amber-ink);font-weight:700}
+.resume p{font-size:14px;color:var(--amber-ink);margin:6px 0 12px}
+.resume-actions{display:flex;gap:10px;flex-wrap:wrap}
+.field{margin-bottom:18px}
+.field-label{display:block;font-weight:700;font-size:14.5px;margin-bottom:8px}
+.field-label small{font-weight:500;color:var(--muted)}
+.text-input{
+  width:100%;min-height:48px;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line-strong);
+  background:var(--surface);font:500 16px var(--font-body);color:var(--ink);transition:border-color .15s,box-shadow .15s;
+}
+.text-input::placeholder{color:var(--muted)}
+.text-input:focus{outline:none;border-color:var(--peach-deep);box-shadow:0 0 0 3px var(--peach-soft)}
+.text-input[aria-invalid="true"]{border-color:var(--rose-deep);box-shadow:0 0 0 3px var(--rose-soft)}
+.seg-group{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg{position:relative;display:block;cursor:pointer}
+.seg-body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:58px;padding:8px 6px;border-radius:12px;border:1.5px solid var(--line-strong);background:var(--surface);transition:all .15s;text-align:center}
+.seg-body strong{font-size:14.5px}
+.seg-body small{font-size:11.5px;color:var(--muted)}
+.seg:hover .seg-body{border-color:var(--peach)}
+.seg input:checked+.seg-body{border-color:var(--peach-deep);background:var(--peach-soft);box-shadow:0 3px 10px rgba(192,122,91,.18)}
+.seg input:checked+.seg-body strong{color:var(--peach-ink)}
+.seg input:checked+.seg-body small{color:var(--peach-ink);opacity:.8}
+.seg:focus-within .seg-body{outline:3px solid var(--blue-deep);outline-offset:2px}
+.switch{display:flex;align-items:center;gap:12px;min-height:48px;cursor:pointer;position:relative}
+.switch-track{flex:none;width:50px;height:28px;border-radius:99px;background:var(--line-strong);position:relative;transition:background .2s}
+.switch-track::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--surface);box-shadow:0 2px 5px rgba(0,0,0,.18);transition:transform .2s cubic-bezier(.22,1,.36,1)}
+.switch input:checked~.switch-track{background:var(--sage-deep)}
+.switch input:checked~.switch-track::after{transform:translateX(22px)}
+.switch:focus-within .switch-track{outline:3px solid var(--blue-deep);outline-offset:2px}
+.switch-text b{display:block;font-size:14.5px}
+.switch-text small{color:var(--muted);font-size:12.5px}
+.start-cta{width:100%;min-height:54px;font-size:16.5px;margin-top:4px}
+.storage-note{display:flex;gap:7px;align-items:center;justify-content:center;margin-top:12px;font-size:12.5px;color:var(--muted)}
+.storage-note .icon{color:var(--sage-deep)}
+.storage-note.warn{color:var(--amber-ink)}
+.storage-note.warn .icon{color:var(--amber-deep)}
+.history-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.history-head .panel-title{margin-bottom:0}
+.best-chip{background:var(--amber-soft);border-color:var(--amber);color:var(--amber-ink)}
+.hrow{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px dashed var(--line)}
+.hrow:last-of-type{border-bottom:0}
+.hscore{flex:none;min-width:56px;text-align:center;padding:6px 8px;border-radius:10px;font-weight:700;font-size:14.5px;font-family:var(--font-mono)}
+.hmeta{flex:1;min-width:0}
+.hmeta b{display:block;font-size:13.5px}
+.hmeta small{color:var(--muted);font-size:12px}
+.hbar{flex:none;width:74px;height:7px;border-radius:99px;background:var(--paper-2);overflow:hidden}
+.hbar i{display:block;height:100%;border-radius:99px}
+.empty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:22px 10px;text-align:center;color:var(--muted)}
+.empty .icon{color:var(--line-strong)}
+.empty b{color:var(--ink-soft);font-size:15px}
+.empty span{font-size:13.5px;max-width:34ch}
+.history-foot{display:flex;justify-content:flex-end;margin-top:10px}
+.foot-note{text-align:center;font-size:12.5px;color:var(--muted);padding:4px 8px}
+/* ============ ТЕСТ ============ */
+.topbar{position:sticky;top:0;z-index:30;margin:-16px -14px 14px;padding:0 14px;background:rgba(246,241,230,.88);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:840px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:60px}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.timer-pill{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:99px;border:1px solid var(--line-strong);background:var(--surface);font:700 15.5px var(--font-mono);font-variant-numeric:tabular-nums;color:var(--ink);transition:background .3s,border-color .3s,color .3s}
+.timer-pill .icon{color:var(--peach-deep)}
+.timer-pill.warn{background:var(--amber-soft);border-color:var(--amber-deep);color:var(--amber-ink)}
+.timer-pill.warn .icon{color:var(--amber-deep)}
+.timer-pill.danger{background:var(--rose-soft);border-color:var(--rose-deep);color:var(--rose-ink);animation:pulse 1s ease infinite}
+.timer-pill.danger .icon{color:var(--rose-deep)}
+@keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(176,101,93,.35)}50%{transform:scale(1.035);box-shadow:0 0 0 6px rgba(176,101,93,0)}}
+.timebar{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
+.timebar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--peach-deep),var(--amber-deep));border-radius:0 3px 3px 0;transition:width .5s linear}
+.q-progress-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.q-count{font-size:14px;color:var(--ink-soft)}
+.q-count b{font-family:var(--font-display);font-size:18px;color:var(--ink)}
+.segments{display:flex;gap:4px;margin-bottom:20px}
+.segments i{flex:1;height:7px;border-radius:99px;background:var(--paper-2);transition:background .3s}
+.segments i.ok{background:var(--sage-deep)}
+.segments i.bad{background:var(--rose-deep)}
+.segments i.skip{background:var(--line-strong)}
+.segments i.now{background:var(--peach-deep);animation:segGlow 1.6s ease infinite}
+@keyframes segGlow{0%,100%{opacity:1}50%{opacity:.55}}
+.q-card{padding:22px 16px}
+.q-enter{animation:fadeUp .45s cubic-bezier(.22,1,.36,1) both}
+.q-fieldset{border:0;min-width:0}
+.q-legend{display:block;width:100%;padding:0;margin-bottom:16px}
+.q-text{font-family:var(--font-display);font-size:19.5px;line-height:1.4;font-weight:700}
+.q-text:focus{outline:none}
+.options{display:flex;flex-direction:column;gap:10px}
+.option{
+  position:relative;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 14px;
+  border:1.5px solid var(--line-strong);border-radius:14px;background:var(--surface);cursor:pointer;
+  transition:border-color .16s,background .16s,transform .16s,box-shadow .16s,opacity .3s;
+}
+.option:not(.is-locked):hover{border-color:var(--peach-deep);background:#fdf6ee;transform:translateX(3px)}
+.option:focus-within{outline:3px solid var(--blue-deep);outline-offset:2px}
+.opt-letter{flex:none;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1.5px solid var(--line-strong);background:var(--surface-2);font:700 14px var(--font-display);color:var(--ink-soft);transition:all .16s}
+.opt-text{flex:1;font-size:15px;line-height:1.45}
+.option.is-selected{border-color:var(--peach-deep);background:var(--peach-soft);box-shadow:0 4px 12px rgba(192,122,91,.16)}
+.option.is-selected .opt-letter{background:var(--peach-deep);border-color:var(--peach-deep);color:#fff8f2}
+.option.is-locked{cursor:default}
+.option.is-correct{border-color:var(--sage-deep);background:var(--sage-soft)}
+.option.is-correct .opt-letter{background:var(--sage-deep);border-color:var(--sage-deep);color:#f4f8ef}
+.option.is-correct .opt-status{color:var(--sage-deep)}
+.option.is-wrong{border-color:var(--rose-deep);background:var(--rose-soft)}
+.option.is-wrong .opt-letter{background:var(--rose-deep);border-color:var(--rose-deep);color:#fdf4f2}
+.option.is-wrong .opt-status{color:var(--rose-deep)}
+.option.is-dim{opacity:.55}
+.kbd-hint{display:none;margin-top:12px;font-size:12.5px;color:var(--muted)}
+@media (hover:hover) and (pointer:fine){.kbd-hint{display:block}}
+.kbd-hint kbd{font:600 11.5px var(--font-mono);background:var(--surface-2);border:1px solid var(--line-strong);border-bottom-width:2px;border-radius:5px;padding:1px 6px}
+.feedback{margin-top:16px;padding:15px 16px;border-radius:14px;border:1px solid;border-left-width:5px;animation:fadeUp .4s cubic-bezier(.22,1,.36,1) both}
+.feedback.ok{background:var(--sage-soft);border-color:var(--sage-deep)}
+.feedback.bad{background:var(--rose-soft);border-color:var(--rose-deep)}
+.feedback.skip{background:var(--blue-soft);border-color:var(--blue-deep)}
+.fb-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.fb-head strong{font-size:16px;font-family:var(--font-display)}
+.feedback.ok .fb-head{color:var(--sage-ink)}
+.feedback.bad .fb-head{color:var(--rose-ink)}
+.feedback.skip .fb-head{color:var(--blue-ink)}
+.fb-time{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font:600 12.5px var(--font-mono);color:var(--ink-soft);background:rgba(255,252,245,.7);padding:4px 9px;border-radius:99px}
+.fb-answer{margin-top:9px;font-size:14.5px;font-weight:600;color:var(--ink)}
+.fb-exp{margin-top:8px;font-size:14.5px;line-height:1.62;color:var(--ink-soft)}
+.q-actions{display:flex;gap:10px;margin-top:18px}
+.q-actions .primary{flex:1}
+/* ============ РЕЗУЛЬТАТЫ ============ */
+.results-wrap{display:flex;flex-direction:column;gap:16px}
+.summary-grid{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.ring-wrap{position:relative;width:150px;height:150px;flex:none}
+.ring{width:150px;height:150px}
+.ring circle{fill:none;stroke-width:10}
+.ring-track{stroke:var(--paper-2)}
+.ring-fg{stroke-linecap:round;transform:rotate(-90deg);transform-box:view-box;transform-origin:50% 50%;transition:stroke-dashoffset 1.15s cubic-bezier(.22,1,.36,1) .12s}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-center b{font-family:var(--font-display);font-size:34px;line-height:1}
+.ring-center span{font-size:12.5px;color:var(--muted);margin-top:4px}
+.summary-info h1{font-size:clamp(24px,5vw,32px)}
+.summary-name{font-size:15px;color:var(--ink-soft);margin-top:6px}
+.summary-meta{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;margin-top:12px;font-size:13.5px;color:var(--ink-soft)}
+.summary-meta span{display:inline-flex;align-items:center;gap:6px}
+.summary-meta .icon{color:var(--peach-deep)}
+.record-chip{display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:7px 14px;border-radius:99px;background:var(--amber-soft);border:1px solid var(--amber-deep);color:var(--amber-ink);font-weight:700;font-size:13.5px;animation:popIn .6s cubic-bezier(.22,1,.36,1) .5s both}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:20px}
+.stat{display:flex;align-items:center;gap:11px;padding:12px 13px;border-radius:14px;border:1px solid var(--line);background:var(--surface-2)}
+.stat-ic{flex:none;width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center}
+.stat b{display:block;font-family:var(--font-display);font-size:22px;line-height:1.1}
+.stat small{font-size:12px;color:var(--ink-soft)}
+.stat.sage .stat-ic{background:var(--sage-soft);color:var(--sage-deep)}
+.stat.rose .stat-ic{background:var(--rose-soft);color:var(--rose-deep)}
+.stat.blue .stat-ic{background:var(--blue-soft);color:var(--blue-deep)}
+.stat.amber .stat-ic{background:var(--amber-soft);color:var(--amber-deep)}
+.advice{display:flex;gap:12px;align-items:flex-start;margin-top:18px;padding:14px 15px;border-radius:14px;background:var(--blue-soft);border:1px solid var(--blue);color:var(--blue-ink);font-size:14.5px;line-height:1.55;text-align:left}
+.advice .icon{margin-top:2px;color:var(--blue-deep)}
+.topic-row{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;padding:9px 0}
+.topic-row+.topic-row{border-top:1px dashed var(--line)}
+.topic-name{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.topic-dot{width:10px;height:10px;border-radius:50%;flex:none}
+.topic-count{font:600 13px var(--font-mono);color:var(--ink-soft)}
+.topic-bar{grid-column:1/-1;height:8px;border-radius:99px;background:var(--paper-2);overflow:hidden}
+.topic-bar i{display:block;height:100%;border-radius:99px;width:0;transition:width .9s cubic-bezier(.22,1,.36,1)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.fchip{min-height:44px;padding:8px 16px;border-radius:99px;border:1.5px solid var(--line-strong);background:var(--surface);font:600 13.5px var(--font-body);color:var(--ink-soft);cursor:pointer;transition:all .15s}
+.fchip:hover{border-color:var(--peach)}
+.fchip[aria-pressed="true"]{background:var(--peach-soft);border-color:var(--peach-deep);color:var(--peach-ink)}
+.rev-item{border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.rev-item+.rev-item{margin-top:10px}
+.rev-btn{display:flex;align-items:center;gap:11px;width:100%;min-height:58px;padding:12px 14px;background:transparent;border:0;cursor:pointer;text-align:left;font:inherit;color:inherit;transition:background .15s}
+.rev-btn:hover{background:var(--surface-2)}
+.rev-status{flex:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.rev-status.ok{background:var(--sage-soft);color:var(--sage-deep)}
+.rev-status.bad{background:var(--rose-soft);color:var(--rose-deep)}
+.rev-status.skip{background:var(--blue-soft);color:var(--blue-deep)}
+.rev-q{flex:1;min-width:0;font-size:14px;font-weight:600;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rev-q small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.rev-chev{flex:none;color:var(--muted);transition:transform .25s}
+.rev-btn[aria-expanded="true"] .rev-chev{transform:rotate(180deg)}
+.rev-panel{padding:2px 15px 16px;animation:fadeUp .3s ease both}
+.rev-panel[hidden]{display:none}
+.rev-full{font-family:var(--font-display);font-size:15.5px;line-height:1.45;margin-bottom:10px}
+.rev-line{display:flex;gap:8px;align-items:flex-start;font-size:14px;padding:7px 0}
+.rev-line .icon{margin-top:2px}
+.rev-line.good{color:var(--sage-ink)}
+.rev-line.bad{color:var(--rose-ink)}
+.rev-line.neutral{color:var(--ink-soft)}
+.rev-exp{margin-top:8px;padding:12px 14px;border-radius:12px;background:var(--surface-2);border:1px dashed var(--line-strong);font-size:14px;line-height:1.6;color:var(--ink-soft)}
+.rev-meta{margin-top:10px;font:500 12.5px var(--font-mono);color:var(--muted)}
+.results-actions{display:flex;gap:10px;flex-wrap:wrap}
+.results-actions .btn{flex:1;min-width:150px}
+.saved-note{display:flex;align-items:center;justify-content:center;gap:7px;font-size:12.5px;color:var(--muted)}
+.saved-note .icon{color:var(--sage-deep)}
+/* ============ ТОСТЫ / МОДАЛ ============ */
+#toasts{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:90;display:flex;flex-direction:column;gap:8px;width:min(430px,calc(100vw - 24px));pointer-events:none}
+.toast{display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:13px;background:#463e33;color:#fbf6ec;font-size:14px;font-weight:600;box-shadow:0 12px 30px rgba(63,56,46,.35);border-left:4px solid var(--blue);animation:toastIn .3s cubic-bezier(.22,1,.36,1) both}
+.toast.ok{border-left-color:var(--sage)}
+.toast.warn{border-left-color:var(--amber)}
+.toast.bad{border-left-color:var(--rose)}
+.toast .icon{color:var(--amber)}
+.toast.ok .icon{color:var(--sage)}
+.toast.bad .icon{color:var(--rose)}
+.toast.info .icon{color:var(--blue)}
+.toast.out{animation:toastOut .25s ease both}
+@keyframes toastIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes toastOut{to{opacity:0;transform:translateY(10px)}}
+.modal-overlay{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(63,56,46,.45);backdrop-filter:blur(3px);opacity:0;transition:opacity .18s}
+.modal-overlay.show{opacity:1}
+.modal{width:100%;max-width:420px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 24px 60px rgba(63,56,46,.35);transform:translateY(12px) scale(.97);transition:transform .2s cubic-bezier(.22,1,.36,1)}
+.modal-overlay.show .modal{transform:translateY(0) scale(1)}
+.modal-title{font-family:var(--font-display);font-size:20px;margin-bottom:8px}
+.modal-body{font-size:14.5px;color:var(--ink-soft);line-height:1.6}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;flex-wrap:wrap}
+/* ============ АДАПТИВ ============ */
+@media (min-width:640px){
+  #app{padding:24px 24px 80px}
+  .card{padding:26px 26px}
+  .q-card{padding:28px 28px}
+  .topbar{margin:-24px -24px 18px;padding:0 24px}
+  .hero-grid{flex-direction:row;text-align:left;align-items:center;gap:26px}
+  .hero-meta{justify-content:flex-start}
+  .seal{width:150px;height:150px}
+  .q-text{font-size:22px}
+  .summary-grid{flex-direction:row;text-align:left;align-items:center;gap:26px}
+  .summary-meta{justify-content:flex-start}
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .results-actions .btn{flex:0 1 auto}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="orb orb-a" aria-hidden="true"></div>
+<div class="orb orb-b" aria-hidden="true"></div>
+<div id="app"></div>
+<div id="toasts" aria-live="polite"></div>
+<div id="modal-root"></div>
+<div id="sr-live" class="sr-only" aria-live="polite"></div>
+<noscript><p style="padding:24px;text-align:center;font-family:Georgia,serif">Для прохождения теста включите JavaScript.</p></noscript>
+<script>
+'use strict';
+/* ==================== CONSTANTS ==================== */
+const K_PROGRESS='nepQuiz.progress.v1', K_HISTORY='nepQuiz.history.v1', K_PREFS='nepQuiz.prefs.v1';
+const LETTERS=['А','Б','В','Г'];
+const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NAME_RE=/^[\p{L}][\p{L} .'\u2019-]*$/u;
+const DURATIONS=[{s:480,label:'8 минут',hint:'спринт'},{s:720,label:'12 минут',hint:'стандарт'},{s:1200,label:'20 минут',hint:'вдумчиво'}];
+const TOPICS={
+  eco:{label:'Экономика',tone:'peach',deep:'var(--peach-deep)'},
+  pol:{label:'Политика',tone:'blue',deep:'var(--blue-deep)'},
+  fin:{label:'Финансы',tone:'amber',deep:'var(--amber-deep)'},
+  soc:{label:'Общество',tone:'lav',deep:'var(--lav-deep)'},
+  agr:{label:'Деревня',tone:'sage',deep:'var(--sage-deep)'},
+  end:{label:'Свёртывание НЭПа',tone:'rose',deep:'var(--rose-deep)'}
+};
+const ADVICE={
+  eco:'Повторите механику НЭПа: продналог, хозрасчёт, тресты и синдикаты, «ножницы цен» 1923 года.',
+  pol:'Освежите политический контекст: X съезд и резолюция «О единстве партии», Кронштадт, монополия одной партии.',
+  fin:'Повторите реформу Г. Я. Сокольникова 1922–1924 гг.: червонец, совзнаки, завершение обмена валюты.',
+  soc:'Разберите социальную структуру: нэпманы, «лишенцы», положение рабочих и служащих кооперации.',
+  agr:'Повторите аграрную политику: продналог, аренда земли и наёмный труд в 1925 г., хлебозаготовки.',
+  end:'Разберите хлебозаготовительный кризис 1927–1928 гг., «урало-сибирский метод» и «великий перелом» 1929 г.'
+};
+const MILESTONES=[
+  {y:'1921',t:'Продналог вместо развёрстки'},
+  {y:'1922',t:'Червонец и первые тресты'},
+  {y:'1923',t:'Кризис «ножниц цен»'},
+  {y:'1924',t:'Завершение денежной реформы'},
+  {y:'1925',t:'Пик НЭПа, «лицом к деревне»'},
+  {y:'1927',t:'XV съезд: курс на коллективизацию'},
+  {y:'1928',t:'Хлебозаготовительный кризис'},
+  {y:'1929',t:'«Год великого перелома»'}
+];
+/* Вопросы: продвинутый уровень, 10 класс */
+const QUESTIONS=[
+  {topic:'eco',correct:1,
+   text:'Какое решение X съезда РКП(б) в марте 1921 года стало отправной точкой перехода от «военного коммунизма» к НЭПу?',
+   options:['Отмена товарно-денежных отношений и переход к прямому продуктообмену','Замена продовольственной развёрстки продовольственным налогом','Введение всеобщей трудовой повинности и трудармий','Национализация всей мелкой и кустарной промышленности'],
+   exp:'Декрет ВЦИК от 21 марта 1921 г. «О замене продразвёрстки натуральным налогом» закрепил решение X съезда. Продналог был почти вдвое меньше развёрстки и объявлялся заранее — до посевной, а излишками крестьянин мог распоряжаться сам. Остальные варианты — меры «военного коммунизма» 1918–1921 гг.'},
+  {topic:'pol',correct:0,
+   text:'Какое событие марта 1921 года, прошедшее под лозунгом «За Советы без коммунистов!», ускорило отказ от «военного коммунизма»?',
+   options:['Восстание моряков и солдат Кронштадтского гарнизона','Крестьянское восстание в Тамбовской губернии («антоновщина»)','Мятеж Чехословацкого корпуса','Выступление генерала Л. Г. Корнилова'],
+   exp:'Кронштадтское восстание (28 февраля — 18 марта 1921 г.) вспыхнуло накануне X съезда и было подавлено войсками под командованием М. Н. Тухачевского. Ленин назвал его «вспышкой, осветившей действительность»: вчерашняя опора революции выступила против продразвёрстки и однопартийной диктатуры. «Антоновщина» тоже подтолкнула к реформам, но лозунг и даты указывают на Кронштадт.'},
+  {topic:'eco',correct:2,
+   text:'Как назывались объединения государственных предприятий, переведённых в годы НЭПа на хозяйственный расчёт?',
+   options:['Синдикаты','Комитеты бедноты','Тресты','Совнархозы'],
+   exp:'Тресты — производственные объединения предприятий на хозрасчёте (декрет 1923 г. о госпредприятиях, работающих на рыночных началах). Синдикаты занимались сбытом и снабжением трестов, комбеды создавались в 1918 г., а совнархозы как органы управления промышленностью — реформа 1957 года.'},
+  {topic:'fin',correct:1,
+   text:'Какой денежный знак, обеспеченный золотом и устойчивой иностранной валютой, был выпущен Госбанком СССР в ходе реформы 1922–1924 годов?',
+   options:['Керенка','Червонец','Совзнак','Бона Дальневосточной республики'],
+   exp:'Банковский билет в 10 рублей («червонец») содержал 7,74 г чистого золота — как дореволюционный империал — и котировался на биржах. Реформа наркома финансов Г. Я. Сокольникова шла параллельно: червонец для крупного оборота, обесценивающийся совзнак — для мелкого. В 1924 г. совзнаки изъяли, установив твёрдый рубль.'},
+  {topic:'eco',correct:0,
+   text:'Что такое «ножницы цен» — кризис осени 1923 года?',
+   options:['Разрыв между высокими ценами на промтовары и низкими закупочными ценами на сельхозпродукцию','Резкое падение курса червонца на валютной бирже','Разница между официальными и «чёрными» ценами на хлеб в городах','Превышение государственных расходов над доходами бюджета'],
+   exp:'Термин ввёл Л. Д. Троцкий, показав на XII съезде график расходящихся ценовых кривых — «ножниц». Тресты взвинтили цены на промтовары, а закупочные цены на хлеб оставались низкими: крестьяне сократили покупки и придерживали зерно. Кризис сбыта грозил разрывом «смычки» города и деревни; государство принудительно снизило цены трестов.'},
+  {topic:'eco',correct:3,
+   text:'Что из перечисленного НЕ относилось к «командным высотам», которые государство сохранило за собой в годы НЭПа?',
+   options:['Крупная промышленность и транспорт','Банковская система и кредит','Монополия внешней торговли','Мелкая розничная торговля'],
+   exp:'«Командные высоты» — крупная промышленность, транспорт, банки и монополия внешней торговли — оставались у государства. Мелкая торговля и мелкое производство были открыты частнику: к 1923 г. на долю нэпманов приходилось около трёх четвертей розничного товарооборота страны.'},
+  {topic:'soc',correct:2,
+   text:'Кого советская власть относила к «лишенцам» — категориям, лишённым избирательных прав в годы НЭПа?',
+   options:['Крестьян-середняков, продававших излишки урожая на рынке','Рабочих государственных трестов','Частных торговцев и предпринимателей, живших на «нетрудовые доходы»','Служащих потребительской кооперации'],
+   exp:'По конституциям РСФСР избирательных прав лишались живущие на нетрудовые доходы: нэпманы, рантье, а также духовенство и бывшие служащие полиции. «Лишенцы» платили повышенные налоги, не имели доступа к соцобеспечению, их дети ограничивались в приёме в вузы. Продажа излишков собственного урожая считалась трудовым доходом.'},
+  {topic:'agr',correct:0,
+   text:'Какая мера 1925 года расширила рыночные отношения в деревне на «пике» НЭПа?',
+   options:['Разрешение аренды земли и найма батраков в крестьянских хозяйствах','Введение твёрдых заданий по сдаче хлеба государству','Запрет частной торговли хлебом','Начало сплошной коллективизации районов'],
+   exp:'Апрельский пленум ЦК 1925 г. разрешил краткосрочную аренду земли и наём работников, снизил сельхозналог — курс «лицом к деревне». Именно тогда Н. И. Бухарин бросил лозунг «Обогащайтесь!», за который позже подвергся критике. Остальные меры относятся к свёртыванию НЭПа в 1928–1930 гг.'},
+  {topic:'end',correct:1,
+   text:'Какой кризис 1927–1928 годов стал непосредственным поводом к свёртыванию НЭПа и переходу к чрезвычайным мерам?',
+   options:['Кризис сбыта промтоваров («ножницы цен»)','Хлебозаготовительный кризис','Валютный кризис — падение курса червонца','Топливный кризис Донбасса'],
+   exp:'К январю 1928 г. государство недобрало около 128 млн пудов хлеба: снизив закупочные цены, власть столкнулась с тем, что крестьяне придерживали зерно. Сталин выехал в Сибирь, и хлеб начали изымать по ст. 107 УК («спекуляция») — «урало-сибирский метод». Рынок сменился принуждением; 1929-й стал «годом великого перелома».'},
+  {topic:'pol',correct:3,
+   text:'В чём историки видят главное внутреннее противоречие НЭПа, предопределившее его свёртывание?',
+   options:['Параллельное хождение двух валют — червонца и совзнака','Отказ государства от монополии внешней торговли','Передача земли крестьянам в частную собственность','Рыночная экономика при сохранении политической монополии одной партии'],
+   exp:'Экономическая либерализация не сопровождалась политической: резолюция X съезда «О единстве партии» запретила фракции, другие партии были разгромлены, в 1922 г. оппозиционную интеллигенцию выслали на «философском пароходе». НЭП мыслился как отступление — «всерьёз и надолго, но не навсегда». Противоречие рынка и диктатуры разрешилось отказом от рынка.'}
+];
+/* Статичные SVG-константы (innerHTML используется ТОЛЬКО для констант, не для ввода) */
+const ICONS={
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>',
+  flag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4h11l-2 4 2 4H5"/></svg>',
+  refresh:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>',
+  copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
+  book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg>',
+  play:'<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5.5v13a1 1 0 0 0 1.5.87l11-6.5a1 1 0 0 0 0-1.74l-11-6.5A1 1 0 0 0 8 5.5z"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  alert:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2 21h20L12 3z"/><path d="M12 10v5M12 18h.01"/></svg>',
+  award:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg>',
+  skip:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>',
+  spark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3l2.4 5.6 6 .5-4.6 4 1.4 5.9-5.2-3.2L6.8 19l1.4-5.9-4.6-4 6-.5z"/></svg>',
+  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>',
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M5 20v-6M11 20V8M17 20v-10M3 20h18"/></svg>',
+  history:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 8v4l3 2"/></svg>',
+  save:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>'
+};
+const SEAL_SVG='<svg viewBox="0 0 160 160" class="seal" role="img" aria-label="Печать: Новая экономическая политика, 1921–1928">'
+ +'<circle cx="80" cy="80" r="76" fill="var(--peach-soft)" stroke="var(--peach-deep)" stroke-width="2.5"/>'
+ +'<circle cx="80" cy="80" r="60" fill="none" stroke="var(--peach-deep)" stroke-width="1" stroke-dasharray="3 4" opacity=".8"/>'
+ +'<defs><path id="sealArc" d="M80,80 m-68,0 a68,68 0 1,1 136,0 a68,68 0 1,1 -136,0"/></defs>'
+ +'<g class="seal-rotor"><text font-size="10" letter-spacing="1.6" fill="var(--peach-deep)" font-family="Georgia,serif" font-weight="bold">'
+ +'<textPath href="#sealArc">НОВАЯ ЭКОНОМИЧЕСКАЯ ПОЛИТИКА • 1921–1928 • ЕГЭ •</textPath></text></g>'
+ +'<text x="80" y="78" text-anchor="middle" font-family="Georgia,serif" font-size="33" font-weight="bold" fill="var(--ink)">НЭП</text>'
+ +'<text x="80" y="99" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="var(--peach-ink)">1921 · 1928</text>'
+ +'<path d="M58 108h44" stroke="var(--peach-deep)" stroke-width="1.5" stroke-linecap="round"/></svg>';
+const RING_SVG='<svg class="ring" viewBox="0 0 120 120"><circle class="ring-track" cx="60" cy="60" r="52"/><circle class="ring-fg" cx="60" cy="60" r="52"/></svg>';
+const EMPTY_SVG='<svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h7a3 3 0 0 1 3 3v13a2.5 2.5 0 0 0-2.5-2.5H2z"/><path d="M22 4h-7a3 3 0 0 0-3 3v13a2.5 2.5 0 0 1 2.5-2.5H22z"/></svg>';
+
+/* ==================== HELPERS ==================== */
+function h(tag,props,...kids){
+  const node=document.createElement(tag);
+  for(const [k,v] of Object.entries(props||{})){
+    if(v===null||v===undefined||v===false)continue;
+    if(k==='class')node.className=v;
+    else if(k==='text')node.textContent=v;
+    else if(k==='checked'||k==='disabled'||k==='value'&&tag==='input')node[k]=v;
+    else if(k.startsWith('on'))node.addEventListener(k.slice(2).toLowerCase(),v);
+    else node.setAttribute(k,v===true?'':String(v));
+  }
+  for(const kid of kids.flat(Infinity)){
+    if(kid===null||kid===undefined||kid===false)continue;
+    node.append(kid.nodeType?kid:document.createTextNode(String(kid)));
+  }
+  return node;
+}
+function fromHTML(html){const t=document.createElement('template');t.innerHTML=html;return t.content.firstElementChild;}
+function icon(name,size,cls){
+  const wrap=h('span',{class:'icon'+(cls?' '+cls:''),'aria-hidden':'true'});
+  wrap.innerHTML=ICONS[name]||ICONS.info;
+  const s=wrap.firstElementChild;s.setAttribute('width',size||20);s.setAttribute('height',size||20);
+  return wrap;
+}
+const pad2=n=>String(n).padStart(2,'0');
+function fmtTime(ms,ceil){const s=Math.max(0,ceil?Math.ceil(ms/1000):Math.round(ms/1000));return pad2(Math.floor(s/60))+':'+pad2(s%60);}
+const dateFmt=new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'long'});
+const timeFmt=new Intl.DateTimeFormat('ru-RU',{hour:'2-digit',minute:'2-digit'});
+function pluralQ(n){const m=n%10,c=n%100;if(m===1&&c!==11)return 'вопрос';if(m>=2&&m<=4&&(c<12||c>14))return 'вопроса';return 'вопросов';}
+function grade(score){
+  if(score>=9)return{title:'Отличный результат',sub:'Уверенное владение темой на уровне ЕГЭ.',tone:'sage'};
+  if(score>=7)return{title:'Хороший результат',sub:'База крепкая — осталось отточить детали.',tone:'blue'};
+  if(score>=5)return{title:'Есть над чем поработать',sub:'Разберите ошибки ниже и попробуйте ещё раз.',tone:'amber'};
+  return{title:'Тему стоит повторить',sub:'Начните с разбора ответов — он подскажет, что читать.',tone:'rose'};
+}
+const toneDeep={sage:'var(--sage-deep)',blue:'var(--blue-deep)',amber:'var(--amber-deep)',rose:'var(--rose-deep)',peach:'var(--peach-deep)'};
+const toneSoft={sage:'var(--sage-soft)',blue:'var(--blue-soft)',amber:'var(--amber-soft)',rose:'var(--rose-soft)',peach:'var(--peach-soft)'};
+const toneInk={sage:'var(--sage-ink)',blue:'var(--blue-ink)',amber:'var(--amber-ink)',rose:'var(--rose-ink)',peach:'var(--peach-ink)'};
+/* Безопасное хранилище (приватный режим / песочница не ломают приложение) */
+const store={ok:true,
+  get(k,fb){try{const raw=localStorage.getItem(k);return raw?JSON.parse(raw):fb;}catch(e){return fb;}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){this.ok=false;}},
+  remove(k){try{localStorage.removeItem(k);}catch(e){}}
+};
+try{localStorage.setItem('nepQuiz.__t','1');localStorage.removeItem('nepQuiz.__t');}catch(e){store.ok=false;}
+function toast(msg,tone){
+  const root=document.getElementById('toasts');
+  const ic={ok:'check',warn:'alert',bad:'x',info:'info'}[tone||'info'];
+  const t=h('div',{class:'toast '+(tone||'info'),role:'status'},icon(ic,18),h('span',{text:msg}));
+  root.append(t);
+  while(root.children.length>3)root.firstChild.remove();
+  setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),260);},3600);
+}
+function announce(msg){const el=document.getElementById('sr-live');el.textContent='';setTimeout(()=>{el.textContent=msg;},40);}
+/* Модальное окно с ловушкой фокуса */
+let modalState=null;
+function openModal(cfg){
+  closeModal();
+  const prevFocus=document.activeElement;
+  const cancelBtn=h('button',{class:'btn ghost',type:'button',onclick:()=>closeModal()},cfg.cancelLabel||'Отмена');
+  const okBtn=h('button',{class:'btn '+(cfg.tone==='danger'?'danger':'primary'),type:'button',onclick:()=>{closeModal();if(cfg.onConfirm)cfg.onConfirm();}},cfg.confirmLabel||'Подтвердить');
+  const dialog=h('div',{class:'modal',role:'dialog','aria-modal':'true','aria-labelledby':'modal-title'},
+    h('h2',{class:'modal-title',id:'modal-title',text:cfg.title}),
+    h('p',{class:'modal-body',text:cfg.body}),
+    h('div',{class:'modal-actions'},cancelBtn,okBtn));
+  const overlay=h('div',{class:'modal-overlay',onmousedown:e=>{if(e.target===overlay)closeModal();}},dialog);
+  overlay.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){e.preventDefault();closeModal();return;}
+    if(e.key==='Tab'){
+      const f=[cancelBtn,okBtn];const i=f.indexOf(document.activeElement);
+      e.preventDefault();
+      const next=e.shiftKey?(i<=0?f.length-1:i-1):(i===f.length-1||i<0?0:i+1);
+      f[next].focus();
+    }
+  });
+  document.getElementById('modal-root').append(overlay);
+  modalState={overlay,prevFocus};
+  requestAnimationFrame(()=>{overlay.classList.add('show');cancelBtn.focus();});
+}
+function closeModal(){
+  if(!modalState)return;
+  const {overlay,prevFocus}=modalState;modalState=null;
+  overlay.classList.remove('show');
+  setTimeout(()=>overlay.remove(),190);
+  if(prevFocus&&prevFocus.focus)prevFocus.focus({preventScroll:true});
+}
+
+/* ==================== STATE ====================
+   screen: 'start' | 'quiz' | 'results'
+   phase (в quiz): 'answer' — выбор, 'feedback' — разбор ответа
+   answers[i] = {q, picked, correct, skipped, timeMs}         */
+const state={
+  screen:'start',
+  name:'',
+  settings:{duration:720,shuffle:true},
+  order:[],current:0,answers:[],phase:'answer',picked:null,
+  endsAt:0,startedAt:0,qStartedAt:0,
+  announced:{two:false,half:false},
+  reviewFilter:'all',
+  history:[],progress:null,lastResult:null
+};
+let timerId=null,lastKey='',timerTextEl=null,timerPillEl=null,timebarEl=null;
+
+/* ---------- Персистентность ---------- */
+function snapshot(){
+  return {v:1,name:state.name,settings:{...state.settings},order:[...state.order],current:state.current,
+    answers:state.answers.map(a=>({...a})),phase:state.phase,picked:state.picked,
+    endsAt:state.endsAt,startedAt:state.startedAt};
+}
+function saveProgress(){if(state.screen!=='quiz')return;const p=snapshot();state.progress=p;store.set(K_PROGRESS,p);}
+function clearProgress(){store.remove(K_PROGRESS);state.progress=null;}
+function saveHistory(){store.set(K_HISTORY,state.history);}
+function savePrefs(){store.set(K_PREFS,{name:state.name,duration:state.settings.duration,shuffle:state.settings.shuffle});}
+function validProgress(p){
+  if(!p||p.v!==1||!Array.isArray(p.order)||p.order.length!==QUESTIONS.length)return false;
+  const seen=new Set(p.order);
+  if(seen.size!==QUESTIONS.length||p.order.some(i=>!Number.isInteger(i)||i<0||i>=QUESTIONS.length))return false;
+  if(!Array.isArray(p.answers)||p.answers.length>QUESTIONS.length)return false;
+  if(p.answers.some(a=>!a||!Number.isInteger(a.q)||typeof a.correct!=='boolean'))return false;
+  if(!Number.isFinite(p.endsAt)||!Number.isFinite(p.startedAt))return false;
+  if(p.phase!=='answer'&&p.phase!=='feedback')return false;
+  if(!p.settings||!DURATIONS.some(d=>d.s===p.settings.duration))return false;
+  return true;
+}
+function loadHistory(){
+  const raw=store.get(K_HISTORY,[]);
+  if(!Array.isArray(raw))return [];
+  return raw.filter(x=>x&&Number.isFinite(x.date)&&Number.isInteger(x.score)&&Number.isFinite(x.timeMs)).slice(0,8);
+}
+
+/* ==================== RENDER ==================== */
+function render(){
+  const app=document.getElementById('app');
+  const key=state.screen+':'+(state.screen==='quiz'?state.current+':'+state.phase:'');
+  const screenChanged=lastKey.split(':')[0]!==state.screen;
+  const questionChanged=state.screen==='quiz'&&key!==lastKey&&state.phase==='answer';
+  stopTimer();
+  app.replaceChildren();
+  if(state.screen==='start')app.append(renderStart());
+  else if(state.screen==='quiz')app.append(renderQuiz(questionChanged));
+  else app.append(renderResults(screenChanged));
+  if(state.screen==='quiz'){ensureTimer();tick();}
+  requestAnimationFrame(()=>{
+    let focusSel=null;
+    if(state.screen==='quiz')focusSel=state.phase==='answer'?'#q-title':'#primary-btn';
+    else if(state.screen==='results')focusSel='#results-title';
+    else if(screenChanged&&lastKey!=='')focusSel='#start-title';
+    if(focusSel){const el=app.querySelector(focusSel);if(el)el.focus({preventScroll:true});}
+    if(screenChanged||questionChanged)window.scrollTo({top:0,behavior:REDUCED?'auto':'smooth'});
+  });
+  lastKey=key;
+}
+
+/* ---------- Экран «Старт» ---------- */
+function renderStart(){
+  const wrap=h('div',{class:'start-wrap stagger'});
+  wrap.append(h('div',{class:'brandline'},
+    h('span',{class:'brand'},icon('book',18),'История России · ЕГЭ'),
+    h('span',{class:'chip topic-lav'},icon('spark',14),'10 класс · углублённый')));
+
+  const metaTime=h('span',{id:'meta-time',text:(state.settings.duration/60)+' минут'});
+  const hero=h('section',{class:'card hero','aria-labelledby':'start-title'},
+    h('div',{class:'hero-grid'},
+      fromHTML(SEAL_SVG),
+      h('div',{},
+        h('p',{class:'eyebrow',text:'Интерактивный тест'}),
+        h('h1',{id:'start-title',tabindex:'-1'},'Новая экономическая политика ',h('span',{class:'years',text:'1921–1929'})),
+        h('p',{class:'hero-sub',text:'10 вопросов повышенного сложности: решения съездов, денежная реформа, кризисы НЭПа и причины его свёртывания. После каждого ответа — исторический комментарий.'}),
+        h('div',{class:'hero-meta'},
+          h('span',{class:'chip'},icon('book',14),'10 вопросов'),
+          h('span',{class:'chip'},icon('clock',14),metaTime),
+          h('span',{class:'chip'},icon('check',14),'1 балл за ответ')),
+        h('ul',{class:'rules'},
+          h('li',{},icon('check',15),'Верный ответ — 1 балл, максимум 10.'),
+          h('li',{},icon('skip',15),'Пропуск — 0 баллов, но вопрос попадёт в разбор.'),
+          h('li',{},icon('clock',15),'Таймер общий на весь тест; по истечении — автозавершение.')))));
+  wrap.append(hero);
+
+  wrap.append(h('section',{class:'card timeline-card','aria-label':'Хронология НЭПа'},
+    h('h2',{},icon('history',19),'Лента событий: настройтесь на эпоху'),
+    h('div',{class:'timeline',tabindex:'0',role:'list','aria-label':'Ключевые даты НЭПа, прокручивается по горизонтали'},
+      MILESTONES.map(m=>h('div',{class:'milestone',role:'listitem'},h('b',{text:m.y}),h('span',{text:m.t}))))));
+
+  /* Баннер незавершённой попытки */
+  if(state.progress){
+    const p=state.progress;
+    const rem=Math.max(0,p.endsAt-Date.now());
+    const expired=rem<=0;
+    wrap.append(h('section',{class:'card resume',role:'region','aria-label':'Незавершённая попытка'},
+      h('div',{class:'resume-head'},icon('history',20),'Незавершённая попытка'),
+      h('p',{text:expired
+        ?'Отвечено '+p.answers.length+' из 10. Время попытки истекло — можно сразу посмотреть результат.'
+        :'Отвечено '+p.answers.length+' из 10 · осталось '+fmtTime(rem,true)+' на таймере.'}),
+      h('div',{class:'resume-actions'},
+        h('button',{class:'btn primary small',type:'button',onclick:resumeAttempt},icon(expired?'chart':'play',17),expired?'К результату':'Продолжить'),
+        h('button',{class:'btn ghost small',type:'button',onclick:confirmDiscard},icon('trash',17),'Сбросить попытку'))));
+  }
+
+  /* Форма настроек + старт */
+  const nameErr=h('p',{class:'form-error',id:'name-error',role:'alert',hidden:true},icon('alert',16),h('span',{id:'name-error-text'}));
+  const nameInput=h('input',{class:'text-input',id:'name-input',type:'text',maxlength:'40',autocomplete:'given-name',
+    placeholder:'Например: Мария',value:state.name,'aria-describedby':'name-hint',
+    oninput:()=>{nameErr.hidden=true;nameInput.removeAttribute('aria-invalid');}});
+  const durInputs=DURATIONS.map(d=>h('input',{class:'sr-only',type:'radio',name:'dur',value:String(d.s),
+    checked:state.settings.duration===d.s,
+    onchange:()=>{state.settings.duration=d.s;const mt=document.getElementById('meta-time');if(mt)mt.textContent=(d.s/60)+' минут';}}));
+  const shuffleInput=h('input',{class:'sr-only',type:'checkbox',checked:state.settings.shuffle,
+    onchange:e=>{state.settings.shuffle=e.target.checked;}});
+  const form=h('form',{class:'card',novalidate:true,onsubmit:onStartSubmit,'aria-label':'Настройки теста'},
+    h('h2',{class:'panel-title'},icon('play',19),'Начать тест'),
+    h('div',{class:'field'},
+      h('label',{class:'field-label',for:'name-input'},'Ваше имя ',h('small',{text:'— необязательно, для итогового экрана'})),
+      nameInput,
+      h('span',{class:'sr-only',id:'name-hint',text:'Только буквы, пробелы и дефис, до 40 символов'}),
+      nameErr),
+    h('fieldset',{class:'field',style:'border:0'},
+      h('legend',{class:'field-label',text:'Время на весь тест'}),
+      h('div',{class:'seg-group'},DURATIONS.map((d,i)=>h('label',{class:'seg'},durInputs[i],
+        h('span',{class:'seg-body'},h('strong',{text:d.label}),h('small',{text:d.hint})))))),
+    h('div',{class:'field'},
+      h('label',{class:'switch'},shuffleInput,h('span',{class:'switch-track','aria-hidden':'true'}),
+        h('span',{class:'switch-text'},h('b',{text:'Перемешивать вопросы'}),h('small',{text:'Случайный порядок при каждом прохождении'})))),
+    h('button',{class:'btn primary start-cta',type:'submit'},icon('play',19),'Начать тест'),
+    store.ok
+      ?h('p',{class:'storage-note'},icon('save',14),'Прогресс и история сохраняются в этом браузере')
+      :h('p',{class:'storage-note warn'},icon('alert',14),'Хранилище недоступно — прогресс не сохранится'));
+  wrap.append(form);
+
+  /* История попыток */
+  const best=state.history.reduce((m,x)=>Math.max(m,x.score),-1);
+  const histBody=h('div',{});
+  if(state.history.length===0){
+    histBody.append(h('div',{class:'empty'},fromHTML(EMPTY_SVG),h('b',{text:'Пока пусто'}),
+      h('span',{text:'Пройдите тест — здесь появятся результаты ваших попыток и личный рекорд.'})));
+  }else{
+    state.history.forEach(x=>{
+      const g=grade(x.score);
+      histBody.append(h('div',{class:'hrow'},
+        h('span',{class:'hscore',style:'background:'+toneSoft[g.tone]+';color:'+toneInk[g.tone],text:x.score+'/10'}),
+        h('span',{class:'hmeta'},
+          h('b',{text:dateFmt.format(x.date)+', '+timeFmt.format(x.date)+(x.timedOut?' · время вышло':'')}),
+          h('small',{text:(x.name?x.name+' · ':'')+'затрачено '+fmtTime(x.timeMs)})),
+        h('span',{class:'hbar','aria-hidden':'true'},h('i',{style:'width:'+x.percent+'%;background:'+toneDeep[g.tone]}))));
+  }
+  const histCard=h('section',{class:'card','aria-label':'История попыток'},
+    h('div',{class:'history-head'},
+      h('h2',{class:'panel-title'},icon('history',19),'Ваши попытки'),
+      best>=0?h('span',{class:'chip best-chip'},icon('award',14),'Рекорд: '+best+'/10'):null),
+    histBody,
+    (state.history.length>0||state.progress)
+      ?h('div',{class:'history-foot'},h('button',{class:'btn danger-ghost small',type:'button',onclick:confirmResetAll},icon('trash',16),'Сбросить все данные'))
+      :null);
+  wrap.append(histCard);
+  wrap.append(h('p',{class:'foot-note',text:'Тема «НЭП» входит в кодификатор ЕГЭ по истории · период 1921–1929 гг.'}));
+  return wrap;
+}
+
+/* ---------- Экран «Тест» ---------- */
+function renderQuiz(animate){
+  const qIdx=state.order[state.current];
+  const q=QUESTIONS[qIdx];
+  const topic=TOPICS[q.topic];
+  const total=state.order.length;
+  const locked=state.phase==='feedback';
+  const isLast=state.current===total-1;
+
+  timerPillEl=h('div',{class:'timer-pill',role:'timer','aria-label':'Оставшееся время'},
+    icon('clock',17),timerTextEl=h('span',{class:'timer-text',text:'--:--'}));
+  timebarEl=h('i',{});
+  const topbar=h('header',{class:'topbar'},
+    h('div',{class:'topbar-inner'},
+      h('span',{class:'brand'},icon('book',17),h('span',{text:'НЭП · Тест'})),
+      h('div',{class:'topbar-right'},timerPillEl,
+        h('button',{class:'icon-btn',type:'button',title:'Завершить досрочно','aria-label':'Завершить тест досрочно',onclick:onEarlyFinish},icon('flag',18)))),
+    h('div',{class:'timebar','aria-hidden':'true'},timebarEl));
+
+  const segs=h('div',{class:'segments','aria-hidden':'true'},Array.from({length:total},(_,i)=>{
+    const a=state.answers[i];
+    let cls='';
+    if(a)cls=a.skipped?'skip':a.correct?'ok':'bad';
+    else if(i===state.current&&!locked)cls='now';
+    return h('i',{class:cls});
+  }));
+  const done=state.answers.length;
+  const okN=state.answers.filter(a=>a.correct).length;
+  const progressBlock=h('div',{},
+    h('div',{class:'q-progress-row'},
+      h('span',{class:'q-count'},'Вопрос ',h('b',{text:String(state.current+1)}),' из '+total),
+      h('span',{class:'chip topic-'+topic.tone,text:topic.label})),
+    segs,
+    h('span',{class:'sr-only',text:'Отвечено '+done+' из '+total+', верно '+okN+'.'}));
+
+  const optionsEl=h('div',{class:'options',id:'options'},q.options.map((opt,i)=>{
+    const input=h('input',{class:'sr-only',type:'radio',name:'answer',value:String(i),
+      checked:state.picked===i,disabled:locked,onchange:()=>onPick(i)});
+    let cls='option';
+    if(locked){
+      cls+=' is-locked';
+      if(i===q.correct)cls+=' is-correct';
+      else if(i===state.picked)cls+=' is-wrong';
+      else cls+=' is-dim';
+    }else if(state.picked===i)cls+=' is-selected';
+    let status=null,sr=null;
+    if(locked&&i===q.correct){status=icon('check',19,'opt-status');sr=h('span',{class:'sr-only',text:' (правильный ответ)'});}
+    else if(locked&&i===state.picked){status=icon('x',19,'opt-status');sr=h('span',{class:'sr-only',text:' (ваш ответ, неверно)'});}
+    return h('label',{class:cls},input,
+      h('span',{class:'opt-letter','aria-hidden':'true',text:LETTERS[i]}),
+      h('span',{class:'opt-text',text:opt}),sr,status);
+  }));
+
+  const err=h('p',{class:'form-error',id:'answer-error',role:'alert',hidden:true},icon('alert',16),h('span',{text:'Сначала выберите вариант ответа — или нажмите «Пропустить».'}));
+  const live=h('div',{'aria-live':'polite'},locked?buildFeedback(q):null);
+  const primary=h('button',{class:'btn primary',type:'submit',id:'primary-btn'},
+    locked?(isLast?'Завершить тест':'Далее'):'Ответить',icon(locked?'arrow':'check',18));
+  const form=h('form',{class:'q-form',novalidate:true,onsubmit:onQuizSubmit},
+    h('fieldset',{class:'q-fieldset'},
+      h('legend',{class:'q-legend'},h('h2',{class:'q-text',id:'q-title',tabindex:'-1',text:q.text})),
+      optionsEl),
+    h('p',{class:'kbd-hint'},'Подсказка: клавиши ',h('kbd',{text:'1'}),'–',h('kbd',{text:'4'}),' выбирают ответ'),
+    err,live,
+    h('div',{class:'q-actions'},
+      locked?null:h('button',{class:'btn ghost',type:'button',onclick:onSkip},icon('skip',17),'Пропустить'),
+      primary));
+
+  const card=h('section',{class:'card q-card'+(animate?' q-enter':''),'aria-label':'Вопрос теста'},progressBlock,form);
+  return h('div',{},topbar,card);
+}
+function buildFeedback(q){
+  const a=state.answers[state.current];
+  const variant=a.skipped?'skip':a.correct?'ok':'bad';
+  const head=a.skipped?'Вопрос пропущен':a.correct?'Верно! +1 балл':'Неверно';
+  const ic=a.skipped?'skip':a.correct?'check':'x';
+  const answerLine=a.correct?null:h('p',{class:'fb-answer',text:'Правильный ответ: '+LETTERS[q.correct]+' — '+q.options[q.correct]});
+  return h('div',{class:'feedback '+variant},
+    h('div',{class:'fb-head'},icon(ic,20),h('strong',{text:head}),
+      h('span',{class:'fb-time'},icon('clock',13),fmtTime(a.timeMs))),
+    answerLine,
+    h('p',{class:'fb-exp',text:q.exp}));
+}
+
+/* ---------- Экран «Результаты» ---------- */
+function renderResults(animate){
+  const r=state.lastResult;
+  const g=grade(r.score);
+  const wrap=h('div',{class:'results-wrap stagger'});
+  wrap.append(h('header',{class:'topbar'},h('div',{class:'topbar-inner'},
+    h('span',{class:'brand'},icon('book',17),'НЭП · Результаты'),
+    h('button',{class:'icon-btn',type:'button',title:'На главную','aria-label':'Вернуться на главный экран',onclick:goHome},icon('home',18)))));
+
+  if(r.timedOut)wrap.append(h('div',{class:'banner warn',role:'status'},icon('alert',19),
+    h('span',{},h('b',{text:'Время вышло. '}),'Тест завершён автоматически; неотвеченные вопросы засчитаны как пропущенные.')));
+  else if(r.early)wrap.append(h('div',{class:'banner info',role:'status'},icon('info',19),
+    h('span',{},h('b',{text:'Тест завершён досрочно. '}),'Неотвеченные вопросы засчитаны как пропущенные.')));
+
+  /* Кольцо результата */
+  const C=2*Math.PI*52;
+  const ring=fromHTML(RING_SVG);
+  ring.setAttribute('role','img');
+  ring.setAttribute('aria-label','Результат: '+r.score+' из 10 ('+r.percent+' процентов)');
+  const fg=ring.querySelector('.ring-fg');
+  fg.style.stroke=toneDeep[g.tone];
+  fg.style.strokeDasharray=String(C);
+  const target=C*(1-r.score/10);
+  fg.style.strokeDashoffset=String(animate?C:target);
+  const ringWrap=h('div',{class:'ring-wrap'},ring,
+    h('div',{class:'ring-center','aria-hidden':'true'},
+      h('b',{style:'color:'+toneInk[g.tone],text:r.percent+'%'}),
+      h('span',{text:r.score+' из 10'})));
+
+  const avg=r.avgMs>0?'≈ '+Math.round(r.avgMs/1000)+' с на вопрос':null;
+  const summary=h('section',{class:'card','aria-labelledby':'results-title'},
+    h('div',{class:'summary-grid'},ringWrap,
+      h('div',{class:'summary-info'},
+        h('p',{class:'eyebrow',text:'Итог попытки'}),
+        h('h1',{id:'results-title',tabindex:'-1',text:g.title}),
+        h('p',{class:'summary-name',text:(state.name?state.name+', ':'')+g.sub}),
+        h('div',{class:'summary-meta'},
+          h('span',{},icon('clock',15),'Затрачено '+fmtTime(r.timeMs)+' из '+fmtTime(r.durationMs)),
+          avg?h('span',{},icon('history',15),avg):null,
+          h('span',{},icon('book',15),dateFmt.format(r.date)+', '+timeFmt.format(r.date))),
+        r.newRecord?h('span',{class:'record-chip'},icon('award',16),'Новый личный рекорд!'):null)),
+    h('div',{class:'stats'},
+      statTile('sage','check',r.correct,'Верно'),
+      statTile('rose','x',r.wrong,'Ошибки'),
+      statTile('blue','skip',r.skipped,'Пропущено'),
+      statTile('amber','spark',r.bestStreak,'Серия подряд')),
+    h('div',{class:'advice'},icon('book',19),
+      h('span',{},h('b',{text:r.weakTopic?'Совет: ':'Отлично: '}),r.weakTopic?ADVICE[r.weakTopic]:'Все 10 вопросов верно — вы уверенно владеете темой «НЭП» на уровне ЕГЭ. Попробуйте режим «спринт» на 8 минут!')));
+  wrap.append(summary);
+
+  /* Аналитика по темам */
+  const topicRows=Object.keys(TOPICS).map((tid,i)=>{
+    const items=r.answers.filter(a=>QUESTIONS[a.q].topic===tid);
+    if(items.length===0)return null;
+    const ok=items.filter(a=>a.correct).length;
+    const t=TOPICS[tid];
+    const bar=h('i',{style:'background:'+t.deep+';transition-delay:'+(animate?i*90:0)+'ms'});
+    bar.dataset.w=String(Math.round(ok/items.length*100));
+    if(!animate)bar.style.width=bar.dataset.w+'%';
+    return h('div',{class:'topic-row'},
+      h('span',{class:'topic-name'},h('i',{class:'topic-dot',style:'background:'+t.deep}),t.label),
+      h('span',{class:'topic-count',text:ok+'/'+items.length}),
+      h('span',{class:'topic-bar'},bar));
+  }).filter(Boolean);
+  wrap.append(h('section',{class:'card','aria-label':'Результаты по темам'},
+    h('h2',{class:'panel-title'},icon('chart',19),'По темам'),topicRows));
+
+  /* Разбор ответов */
+  const counts={all:r.answers.length,wrong:r.wrong,skipped:r.skipped};
+  const filterDefs=[['all','Все'],['wrong','Ошибки'],['skipped','Без ответа']];
+  const reviewList=h('div',{id:'review-list'});
+  const chips=filterDefs.map(([fid,label])=>h('button',{class:'fchip',type:'button',
+    'aria-pressed':String(state.reviewFilter===fid),
+    onclick:()=>{state.reviewFilter=fid;render();}},label+' ('+counts[fid]+')'));
+  const filtered=r.answers.filter(a=>state.reviewFilter==='all'?true:state.reviewFilter==='wrong'?(!a.correct&&!a.skipped):a.skipped);
+  if(filtered.length===0){
+    reviewList.append(h('div',{class:'empty'},icon('spark',40),
+      h('b',{text:state.reviewFilter==='wrong'?'Ошибок нет — блестяще!':'Пропущенных вопросов нет'}),
+      h('span',{text:'Переключите фильтр, чтобы посмотреть остальные вопросы.'})));
+  }else{
+    filtered.forEach(a=>reviewList.append(buildReviewItem(a,r)));
+  }
+  wrap.append(h('section',{class:'card','aria-label':'Разбор вопросов'},
+    h('h2',{class:'panel-title'},icon('book',19),'Разбор вопросов'),
+    h('div',{class:'filters',role:'group','aria-label':'Фильтр разбора'},chips),reviewList));
+
+  wrap.append(h('div',{class:'results-actions'},
+    h('button',{class:'btn primary',type:'button',onclick:()=>startAttempt()},icon('refresh',18),'Пройти ещё раз'),
+    h('button',{class:'btn secondary',type:'button',onclick:copyResult},icon('copy',18),'Скопировать результат'),
+    h('button',{class:'btn ghost',type:'button',onclick:goHome},icon('home',18),'На главную')));
+  wrap.append(h('p',{class:'saved-note'},icon(store.ok?'save':'alert',14),
+    store.ok?'Попытка сохранена в истории этого браузера':'История не сохранена: хранилище недоступно'));
+
+  if(animate){
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      fg.style.strokeDashoffset=String(target);
+      wrap.querySelectorAll('.topic-bar i').forEach(b=>{b.style.width=b.dataset.w+'%';});
+    }));
+  }
+  return wrap;
+}
+function statTile(tone,ic,value,label){
+  return h('div',{class:'stat '+tone},
+    h('span',{class:'stat-ic'},icon(ic,19)),
+    h('span',{},h('b',{text:String(value)}),h('small',{text:label})));
+}
+function buildReviewItem(a,r){
+  const q=QUESTIONS[a.q];
+  const num=r.answers.indexOf(a)+1;
+  const st=a.skipped?'skip':a.correct?'ok':'bad';
+  const panelId='rev-p-'+num;
+  const panel=h('div',{class:'rev-panel',id:panelId,hidden:true},
+    h('p',{class:'rev-full',text:q.text}),
+    a.skipped
+      ?h('p',{class:'rev-line neutral'},icon('skip',16),'Вы пропустили этот вопрос')
+      :h('p',{class:'rev-line '+(a.correct?'good':'bad')},icon(a.correct?'check':'x',16),
+        'Ваш ответ: '+LETTERS[a.picked]+' — '+q.options[a.picked]),
+    a.correct?null:h('p',{class:'rev-line good'},icon('check',16),'Верный ответ: '+LETTERS[q.correct]+' — '+q.options[q.correct]),
+    h('div',{class:'rev-exp',text:q.exp}),
+    h('p',{class:'rev-meta',text:(a.skipped?'без ответа':'время: '+fmtTime(a.timeMs))+' · тема: '+TOPICS[q.topic].label}));
+  const btn=h('button',{class:'rev-btn',type:'button','aria-expanded':'false','aria-controls':panelId,
+    onclick:()=>{
+      const open=btn.getAttribute('aria-expanded')==='true';
+      btn.setAttribute('aria-expanded',String(!open));
+      panel.hidden=open;
+    }},
+    h('span',{class:'rev-status '+st},icon(a.skipped?'skip':a.correct?'check':'x',17)),
+    h('span',{class:'rev-q'},h('small',{text:'Вопрос '+num+' · '+TOPICS[q.topic].label}),q.text),
+    icon('chev',18,'rev-chev'));
+  return h('div',{class:'rev-item'},btn,panel);
+}
+
+/* ==================== HANDLERS / ЛОГИКА ==================== */
+function onStartSubmit(e){
+  e.preventDefault();
+  const input=document.getElementById('name-input');
+  const err=document.getElementById('name-error');
+  const errText=document.getElementById('name-error-text');
+  const name=input.value.trim();
+  if(name.length>40||name&&!NAME_RE.test(name)){
+    errText.textContent=name.length>40
+      ?'Имя слишком длинное — максимум 40 символов.'
+      :'Имя может содержать только буквы, пробелы, апостроф и дефис.';
+    err.hidden=false;
+    input.setAttribute('aria-invalid','true');
+    input.classList.remove('shake');void input.offsetWidth;input.classList.add('shake');
+    input.focus();
+    return;
+  }
+  state.name=name;
+  savePrefs();
+  startAttempt();
+}
+function shuffledOrder(){
+  const arr=QUESTIONS.map((_,i)=>i);
+  if(state.settings.shuffle){
+    for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  }
+  return arr;
+}
+/* Старт новой попытки: сброс состояния, запуск общего таймера */
+function startAttempt(){
+  clearProgress();
+  state.order=shuffledOrder();
+  state.current=0;state.answers=[];state.phase='answer';state.picked=null;
+  state.startedAt=Date.now();
+  state.endsAt=state.startedAt+state.settings.duration*1000;
+  state.qStartedAt=state.startedAt;
+  state.announced={two:false,half:false};
+  state.screen='quiz';
+  saveProgress();
+  render();
+}
+function resumeAttempt(){
+  const p=state.progress;
+  if(!validProgress(p)){clearProgress();toast('Сохранённая попытка повреждена и удалена','warn');render();return;}
+  state.name=typeof p.name==='string'?p.name:'';
+  state.settings={duration:p.settings.duration,shuffle:!!p.settings.shuffle};
+  state.order=[...p.order];
+  state.answers=p.answers.map(a=>({...a}));
+  state.startedAt=p.startedAt;state.endsAt=p.endsAt;
+  state.qStartedAt=Date.now();
+  state.announced={two:false,half:false};
+  /* индекс выводим из числа ответов — защита от рассинхронизации */
+  if(state.answers.length>=QUESTIONS.length){
+    state.current=QUESTIONS.length-1;state.phase='feedback';state.picked=state.answers[state.current].picked;
+    state.screen='quiz';finishAttempt('done');return;
+  }
+  state.phase=p.phase==='feedback'&&state.answers.length>0?'feedback':'answer';
+  state.current=state.phase==='feedback'?state.answers.length-1:state.answers.length;
+  state.picked=state.phase==='feedback'?state.answers[state.current].picked:null;
+  if(state.endsAt<=Date.now()){state.screen='quiz';finishAttempt('timeout');return;}
+  state.screen='quiz';
+  render();
+  toast('Попытка продолжена — таймер идёт','info');
+}
+function onPick(i){
+  if(state.phase!=='answer')return;
+  state.picked=i;
+  const err=document.getElementById('answer-error');if(err)err.hidden=true;
+  const opts=document.getElementById('options');
+  if(opts)opts.querySelectorAll('.option').forEach((el,idx)=>el.classList.toggle('is-selected',idx===i));
+}
+function onQuizSubmit(e){
+  e.preventDefault();
+  if(state.phase==='answer')confirmAnswer();else nextQuestion();
+}
+/* Проверка ответа: фиксируем результат, показываем разбор */
+function confirmAnswer(){
+  if(state.phase!=='answer')return;
+  if(state.picked===null){
+    const err=document.getElementById('answer-error');
+    const opts=document.getElementById('options');
+    if(err)err.hidden=false;
+    if(opts){opts.classList.remove('shake');void opts.offsetWidth;opts.classList.add('shake');}
+    announce('Выберите вариант ответа');
+    return;
+  }
+  const q=QUESTIONS[state.order[state.current]];
+  state.answers.push({q:state.order[state.current],picked:state.picked,
+    correct:state.picked===q.correct,skipped:false,timeMs:Date.now()-state.qStartedAt});
+  state.phase='feedback';
+  saveProgress();
+  render();
+}
+function onSkip(){
+  if(state.phase!=='answer')return;
+  state.answers.push({q:state.order[state.current],picked:null,correct:false,skipped:true,timeMs:Date.now()-state.qStartedAt});
+  state.picked=null;
+  state.phase='feedback';
+  saveProgress();
+  render();
+}
+function nextQuestion(){
+  if(state.phase!=='feedback')return;
+  if(state.current>=state.order.length-1){finishAttempt('done');return;}
+  state.current++;
+  state.phase='answer';state.picked=null;
+  state.qStartedAt=Date.now();
+  saveProgress();
+  render();
+}
+function onEarlyFinish(){
+  const n=QUESTIONS.length-state.answers.length;
+  openModal({
+    title:'Завершить тест досрочно?',
+    body:n>0?('Без ответа '+n+' '+pluralQ(n)+'. Они будут засчитаны как пропущенные (0 баллов), но попадут в разбор.'):'Все вопросы уже отвечены — переходим к результатам.',
+    confirmLabel:'Завершить',cancelLabel:'Продолжить тест',tone:'danger',
+    onConfirm:()=>finishAttempt('early')
+  });
+}
+function confirmDiscard(){
+  openModal({
+    title:'Сбросить текущую попытку?',
+    body:'Прогресс незавершённого теста будет удалён. История прошлых попыток сохранится.',
+    confirmLabel:'Сбросить',tone:'danger',
+    onConfirm:()=>{clearProgress();render();toast('Попытка сброшена','info');}
+  });
+}
+function confirmResetAll(){
+  openModal({
+    title:'Сбросить все данные?',
+    body:'Будут удалены сохранённая попытка, история результатов и настройки. Это действие нельзя отменить.',
+    confirmLabel:'Удалить всё',tone:'danger',
+    onConfirm:()=>{
+      store.remove(K_PROGRESS);store.remove(K_HISTORY);store.remove(K_PREFS);
+      state.progress=null;state.history=[];state.name='';
+      state.settings={duration:720,shuffle:true};
+      render();toast('Все данные удалены','ok');
+    }
+  });
+}
+/* Финал: добираем пропуски, считаем баллы, пишем историю */
+function finishAttempt(reason){
+  if(state.screen!=='quiz')return;
+  closeModal();stopTimer();
+  const now=Date.now();
+  for(let k=state.answers.length;k<state.order.length;k++){
+    state.answers.push({q:state.order[k],picked:null,correct:false,skipped:true,timeMs:0});
+  }
+  const timeMs=Math.max(0,Math.min(now,state.endsAt)-state.startedAt);
+  const correct=state.answers.filter(a=>a.correct).length;
+  const wrong=state.answers.filter(a=>!a.correct&&!a.skipped).length;
+  const skipped=state.answers.filter(a=>a.skipped).length;
+  let streak=0,bestStreak=0;
+  state.answers.forEach(a=>{streak=a.correct?streak+1:0;bestStreak=Math.max(bestStreak,streak);});
+  const answered=state.answers.filter(a=>!a.skipped);
+  const avgMs=answered.length?answered.reduce((s,a)=>s+a.timeMs,0)/answered.length:0;
+  /* слабая тема — по доле ошибок */
+  let weakTopic=null,weakRatio=0;
+  Object.keys(TOPICS).forEach(tid=>{
+    const items=state.answers.filter(a=>QUESTIONS[a.q].topic===tid);
+    if(!items.length)return;
+    const bad=items.filter(a=>!a.correct).length/items.length;
+    if(bad>weakRatio){weakRatio=bad;weakTopic=tid;}
+  });
+  const prevBest=state.history.reduce((m,x)=>Math.max(m,x.score),-1);
+  const result={
+    score:correct,correct,wrong,skipped,bestStreak,avgMs,
+    percent:Math.round(correct/QUESTIONS.length*100),
+    timeMs,durationMs:state.settings.duration*1000,
+    timedOut:reason==='timeout',early:reason==='early',
+    date:now,weakTopic,newRecord:prevBest>=0&&correct>prevBest,
+    answers:state.answers.map(a=>({...a}))
+  };
+  state.history.unshift({date:now,score:correct,percent:result.percent,timeMs,name:state.name,timedOut:result.timedOut});
+  state.history=state.history.slice(0,8);
+  saveHistory();
+  clearProgress();
+  state.lastResult=result;
+  state.reviewFilter='all';
+  state.screen='results';
+  render();
+  if(reason==='timeout')toast('Время вышло — тест завершён автоматически','warn');
+  else if(result.newRecord)toast('Новый личный рекорд: '+correct+'/10!','ok');
+}
+function goHome(){state.screen='start';render();}
+function copyResult(){
+  const r=state.lastResult;
+  const lines=[
+    'Тест «НЭП» (история России, ЕГЭ)',
+    (state.name?'Участник: '+state.name:'Участник: без имени'),
+    'Баллы: '+r.score+'/10 ('+r.percent+'%)',
+    'Время: '+fmtTime(r.timeMs)+' из '+fmtTime(r.durationMs)+(r.timedOut?' (время вышло)':''),
+    'Верно: '+r.correct+' · Ошибки: '+r.wrong+' · Пропущено: '+r.skipped,
+    'Лучшая серия: '+r.bestStreak+' подряд',
+    'Дата: '+dateFmt.format(r.date)+', '+timeFmt.format(r.date)
+  ];
+  const text=lines.join('\n');
+  const fallback=()=>{
+    try{
+      const ta=document.createElement('textarea');
+      ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';
+      document.body.append(ta);ta.select();
+      const ok=document.execCommand('copy');ta.remove();
+      toast(ok?'Результат скопирован в буфер обмена':'Не удалось скопировать — доступ к буферу запрещён',ok?'ok':'bad');
+    }catch(e){toast('Не удалось скопировать результат','bad');}
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>toast('Результат скопирован в буфер обмена','ok')).catch(fallback);
+  }else fallback();
+}
+/* ---------- Таймер ---------- */
+function ensureTimer(){if(timerId===null)timerId=setInterval(tick,500);}
+function stopTimer(){if(timerId!==null){clearInterval(timerId);timerId=null;}}
+function tick(){
+  if(state.screen!=='quiz')return;
+  const rem=state.endsAt-Date.now();
+  if(timerTextEl)timerTextEl.textContent=fmtTime(Math.max(0,rem),true);
+  if(timerPillEl){
+    timerPillEl.classList.toggle('warn',rem<=120000&&rem>30000);
+    timerPillEl.classList.toggle('danger',rem<=30000);
+  }
+  if(timebarEl)timebarEl.style.width=Math.max(0,Math.min(100,rem/(state.settings.duration*1000)*100))+'%';
+  if(rem<=120000&&rem>30000&&!state.announced.two){state.announced.two=true;toast('Осталось 2 минуты','warn');announce('Осталось две минуты');}
+  if(rem<=30000&&rem>0&&!state.announced.half){state.announced.half=true;toast('Осталось 30 секунд!','bad');announce('Осталось тридцать секунд');}
+  if(rem<=0)finishAttempt('timeout');
+}
+/* Горячие клавиши 1–4 в фазе выбора ответа */
+function onGlobalKey(e){
+  if(modalState||state.screen!=='quiz')return;
+  const t=e.target;
+  if(t&&(t.tagName==='TEXTAREA'||t.tagName==='SELECT'||(t.tagName==='INPUT'&&t.type!=='radio'&&t.type!=='checkbox')))return;
+  if(e.altKey||e.ctrlKey||e.metaKey)return;
+  if(state.phase==='answer'&&['1','2','3','4'].includes(e.key)){
+    const inputs=document.querySelectorAll('#options input');
+    const idx=Number(e.key)-1;
+    if(inputs[idx]&&!inputs[idx].disabled){
+      e.preventDefault();
+      inputs[idx].checked=true;
+      inputs[idx].dispatchEvent(new Event('change'));
+      inputs[idx].focus();
+    }
+  }else if(state.phase==='feedback'&&e.key==='Enter'&&t&&t.tagName!=='BUTTON'){
+    const btn=document.getElementById('primary-btn');
+    if(btn){e.preventDefault();btn.click();}
+  }
+}
+
+/* ==================== INIT ==================== */
+function init(){
+  const prefs=store.get(K_PREFS,null);
+  if(prefs&&typeof prefs==='object'){
+    if(typeof prefs.name==='string'&&prefs.name.length<=40)state.name=prefs.name;
+    if(DURATIONS.some(d=>d.s===prefs.duration))state.settings.duration=prefs.duration;
+    if(typeof prefs.shuffle==='boolean')state.settings.shuffle=prefs.shuffle;
+  }
+  state.history=loadHistory();
+  const p=store.get(K_PROGRESS,null);
+  if(p){
+    if(validProgress(p))state.progress=p;
+    else store.remove(K_PROGRESS); /* повреждённые данные — тихо очищаем */
+  }
+  document.addEventListener('keydown',onGlobalKey);
+  window.addEventListener('pagehide',saveProgress);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden)saveProgress();
+    else if(state.screen==='quiz')tick();
+  });
+  render();
+}
+init();
+</script>
+</body>
+</html>
